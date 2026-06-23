@@ -45,6 +45,8 @@ export default function Contact() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
   useEffect(() => {
@@ -56,11 +58,35 @@ export default function Contact() {
     return () => obs.disconnect();
   }, []);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", phone: "", message: "" });
-    setTimeout(() => setSent(false), 5000);
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+          subject: `Nuova richiesta da ${form.name} - Mazzelli Elettromeccanica`,
+          from_name: form.name,
+          email: form.email,
+          phone: form.phone || "non fornito",
+          message: form.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSent(true);
+        setForm({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setError("Errore nell'invio. Riprova o chiamaci direttamente.");
+      }
+    } catch {
+      setError("Errore di connessione. Riprova o chiamaci direttamente.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -68,7 +94,6 @@ export default function Contact() {
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(249,115,22,0.06)_0%,transparent_70%)]" />
 
       <div ref={ref} className="relative max-w-7xl mx-auto px-6">
-        {/* Header */}
         <div
           className={`text-center mb-16 transition-all duration-700 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -87,7 +112,6 @@ export default function Contact() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Left: Contact info */}
           <div
             className={`transition-all duration-700 delay-200 ${
               visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
@@ -114,7 +138,6 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Map placeholder */}
             <div className="glass rounded-2xl overflow-hidden h-48 flex items-center justify-center relative">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-900/20 to-slate-900" />
               <div className="relative text-center">
@@ -125,7 +148,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right: Form */}
           <div
             className={`transition-all duration-700 delay-400 ${
               visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
@@ -190,12 +212,16 @@ export default function Contact() {
                     />
                   </div>
 
+                  {error && (
+                    <p className="text-red-400 text-sm text-center">{error}</p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg hover:from-orange-400 hover:to-orange-500 transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2"
+                    disabled={sending}
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg hover:from-orange-400 hover:to-orange-500 transition-all shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     <Send size={18} />
-                    Invia Richiesta
+                    {sending ? "Invio in corso..." : "Invia Richiesta"}
                   </button>
 
                   <p className="text-center text-xs text-slate-500">
