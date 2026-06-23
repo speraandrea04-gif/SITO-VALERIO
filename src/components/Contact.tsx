@@ -6,8 +6,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: "Telefono",
-    value: "+39 340 123 4567",
-    href: "tel:+393401234567",
+    value: "+39 346 593 5633",
+    href: "tel:+393465935633",
     color: "text-orange-400",
     bg: "bg-orange-500/10",
     desc: "Disponibile tutti i giorni",
@@ -15,8 +15,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@valeriomazzelli.it",
-    href: "mailto:info@valeriomazzelli.it",
+    value: "mazzelliv@gmail.com",
+    href: "mailto:mazzelliv@gmail.com",
     color: "text-sky-400",
     bg: "bg-sky-500/10",
     desc: "Risposta entro 24h",
@@ -200,8 +200,8 @@ export default function Contact() {
 
                   <p className="text-center text-xs text-slate-500">
                     Oppure chiamaci direttamente:{" "}
-                    <a href="tel:+393401234567" className="text-orange-400 hover:text-orange-300 font-semibold">
-                      +39 340 123 4567
+                    <a href="tel:+393465935633" className="text-orange-400 hover:text-orange-300 font-semibold">
+                      +39 346 593 5633
                     </a>
                   </p>
                 </form>

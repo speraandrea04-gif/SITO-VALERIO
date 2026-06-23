@@ -110,13 +110,13 @@ export default function Hero() {
 
             {/* Phone quick contact */}
             <a
-              href="tel:+393401234567"
+              href="tel:+393465935633"
               className="inline-flex items-center gap-3 text-slate-300 hover:text-orange-400 transition-colors group"
             >
               <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center group-hover:bg-orange-500/40 transition-colors">
                 <Phone size={16} className="text-orange-400" />
               </div>
-              <span className="font-semibold">+39 340 123 4567</span>
+              <span className="font-semibold">+39 346 593 5633</span>
             </a>
           </div>
 

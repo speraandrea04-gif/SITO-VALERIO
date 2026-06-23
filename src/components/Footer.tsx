@@ -45,14 +45,14 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2 text-slate-500">
                 <Phone size={14} className="text-orange-400 shrink-0" />
-                <a href="tel:+393401234567" className="hover:text-orange-400 transition-colors">
-                  +39 340 123 4567
+                <a href="tel:+393465935633" className="hover:text-orange-400 transition-colors">
+                  +39 346 593 5633
                 </a>
               </li>
               <li className="flex items-center gap-2 text-slate-500">
                 <Mail size={14} className="text-sky-400 shrink-0" />
-                <a href="mailto:info@valeriomazzelli.it" className="hover:text-sky-400 transition-colors">
-                  info@valeriomazzelli.it
+                <a href="mailto:mazzelliv@gmail.com" className="hover:text-sky-400 transition-colors">
+                  mazzelliv@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2 text-slate-500">
