@@ -41,6 +41,12 @@ body {
   to { transform: rotate(-360deg); }
 }
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 .animate-gradient { animation: gradient-shift 4s ease infinite; background-size: 200% 200%; }
