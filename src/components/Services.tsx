@@ -22,7 +22,7 @@ const services = [
     subtitle: "Riparazione e Revisione",
     desc: "Revisione completa e riparazione di gruppi di pressione per impianti civili e industriali. Effettuiamo smontaggio, ispezione, sostituzione delle parti usurate e rimontaggio con calibrazione ottimale della pressione di esercizio.",
     features: ["Revisione completa", "Calibrazione pressione", "Impianti civili e industriali", "Sostituzione parti usurate"],
-    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80",
+    image: "https://i.postimg.cc/pT74hHpK/ALICANTE-1.jpg",
     color: "from-orange-500 to-red-500",
     glow: "shadow-orange-500/20",
     iconBg: "bg-orange-500/10",
