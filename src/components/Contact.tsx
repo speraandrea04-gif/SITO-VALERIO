@@ -33,7 +33,7 @@ const contactInfo = [
   {
     icon: Clock,
     label: "Orari",
-    value: "Lun–Sab 8:00–19:00",
+    value: "Lun–Ven 8:00–18:00",
     href: null,
     color: "text-emerald-400",
     bg: "bg-emerald-500/10",
