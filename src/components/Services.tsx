@@ -9,6 +9,7 @@ const services = [
     subtitle: "Componenti Idrauliche",
     desc: "Diagnosi e riparazione professionale di elettropompe e componenti idrauliche di ogni marca e tipologia. Interveniamo su pompe sommerse, centrifughe, autoadescanti e multistadio, ripristinando le prestazioni originali con ricambi certificati.",
     features: ["Pompe sommerse e centrifughe", "Componenti idrauliche", "Ricambi certificati", "Test di funzionalità post-riparazione"],
+    image: "https://images.unsplash.com/photo-1565608087341-404b25492fee?w=800&q=80",
     color: "from-sky-500 to-blue-600",
     glow: "shadow-sky-500/20",
     iconBg: "bg-sky-500/10",
@@ -21,6 +22,7 @@ const services = [
     subtitle: "Riparazione e Revisione",
     desc: "Revisione completa e riparazione di gruppi di pressione per impianti civili e industriali. Effettuiamo smontaggio, ispezione, sostituzione delle parti usurate e rimontaggio con calibrazione ottimale della pressione di esercizio.",
     features: ["Revisione completa", "Calibrazione pressione", "Impianti civili e industriali", "Sostituzione parti usurate"],
+    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80",
     color: "from-orange-500 to-red-500",
     glow: "shadow-orange-500/20",
     iconBg: "bg-orange-500/10",
@@ -33,6 +35,7 @@ const services = [
     subtitle: "e Idraulici",
     desc: "Collaudi tecnici completi su impianti elettrici e idraulici per verificarne la conformità e sicurezza. Rilasciamo documentazione tecnica al termine di ogni collaudo, utile per certificazioni e pratiche burocratiche.",
     features: ["Verifica conformità impianti", "Collaudi di pressione", "Documentazione tecnica", "Certificazioni di sicurezza"],
+    image: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=80",
     color: "from-violet-500 to-purple-600",
     glow: "shadow-violet-500/20",
     iconBg: "bg-violet-500/10",
@@ -45,6 +48,7 @@ const services = [
     subtitle: "Programmazione & Configurazione",
     desc: "Configurazione, programmazione e riparazione di inverter per il controllo di pompe e gruppi di pressione. Ottimizziamo i parametri di funzionamento per massimizzare l'efficienza energetica e la durata delle apparecchiature.",
     features: ["Programmazione parametri", "Ottimizzazione energetica", "Riparazione guasti elettronici", "Compatibilità multi-marca"],
+    image: "https://images.unsplash.com/photo-1620283085439-39620a1e21c4?w=800&q=80",
     color: "from-emerald-500 to-teal-600",
     glow: "shadow-emerald-500/20",
     iconBg: "bg-emerald-500/10",
@@ -65,20 +69,29 @@ function ServiceCard({ s, i, visible }: { s: typeof services[0]; i: number; visi
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Image header */}
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={s.image}
+          alt={s.title}
+          className={`w-full h-full object-cover transition-transform duration-700 ${hovered ? "scale-110" : "scale-100"}`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+        <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-20 mix-blend-overlay`} />
+        {/* Number */}
+        <span className="absolute top-4 right-5 text-6xl font-black text-white/20">
+          {s.num}
+        </span>
+        {/* Icon badge */}
+        <div className={`absolute bottom-4 left-5 w-14 h-14 rounded-2xl ${s.iconBg} backdrop-blur-md border border-white/10 flex items-center justify-center`}>
+          <s.icon size={26} className={s.iconColor} />
+        </div>
+      </div>
+
       {/* Top gradient bar */}
       <div className={`h-1.5 bg-gradient-to-r ${s.color}`} />
 
       <div className="p-7">
-        {/* Number + Icon */}
-        <div className="flex items-start justify-between mb-5">
-          <div className={`w-14 h-14 rounded-2xl ${s.iconBg} flex items-center justify-center`}>
-            <s.icon size={26} className={s.iconColor} />
-          </div>
-          <span className={`text-5xl font-black bg-gradient-to-r ${s.color} bg-clip-text text-transparent opacity-30`}>
-            {s.num}
-          </span>
-        </div>
-
         {/* Text */}
         <p className={`text-xs font-bold uppercase tracking-widest ${s.iconColor} mb-1`}>
           {s.subtitle}
