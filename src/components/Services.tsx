@@ -9,7 +9,7 @@ const services = [
     subtitle: "Componenti Idrauliche",
     desc: "Diagnosi e riparazione professionale di elettropompe e componenti idrauliche di ogni marca e tipologia. Interveniamo su pompe sommerse, centrifughe, autoadescanti e multistadio, ripristinando le prestazioni originali con ricambi certificati.",
     features: ["Pompe sommerse e centrifughe", "Componenti idrauliche", "Ricambi certificati", "Test di funzionalità post-riparazione"],
-    image: "https://images.unsplash.com/photo-1565608087341-404b25492fee?w=800&q=80",
+    image: "https://i.postimg.cc/JnghFNXj/elettropompa-riparazione-02.jpg",
     color: "from-sky-500 to-blue-600",
     glow: "shadow-sky-500/20",
     iconBg: "bg-sky-500/10",
