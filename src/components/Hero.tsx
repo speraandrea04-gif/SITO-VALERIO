@@ -84,13 +84,13 @@ export default function Hero() {
   }, []);
 
   const imgStyle = {
-    transform: `scale(1.15) translateY(${scrollY * 0.4}px) rotateX(${-tilt.x * 4}deg) rotateY(${tilt.y * 4}deg)`,
-    transition: "transform 0.15s ease-out",
+    transform: `perspective(800px) scale(1.2) translateY(${scrollY * 0.5}px) rotateX(${-tilt.x * 12}deg) rotateY(${tilt.y * 12}deg)`,
+    transition: "transform 0.2s ease-out",
   };
 
   const contentStyle = {
-    transform: `translateX(${tilt.y * -12}px) translateY(${tilt.x * -8}px)`,
-    transition: "transform 0.3s ease-out",
+    transform: `perspective(800px) translateX(${tilt.y * -25}px) translateY(${tilt.x * -18}px) translateZ(60px)`,
+    transition: "transform 0.4s ease-out",
   };
 
   return (
@@ -98,7 +98,6 @@ export default function Hero() {
       ref={sectionRef}
       id="home"
       className="relative h-screen w-full overflow-hidden"
-      style={{ perspective: "1200px" }}
     >
       {slides.map((slide, i) => {
         const isActive = i === current;
@@ -114,7 +113,7 @@ export default function Hero() {
               src={slide.image}
               alt=""
               className="w-full h-full object-cover will-change-transform"
-              style={isActive ? imgStyle : { transform: "scale(1.15)" }}
+              style={isActive ? imgStyle : { transform: "scale(1.2)" }}
             />
           </div>
         );
