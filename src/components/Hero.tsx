@@ -1,146 +1,98 @@
 "use client";
-import { useEffect, useState, useCallback, useRef } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight, Phone } from "lucide-react";
+import { useEffect, useState, useRef, Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Environment, ContactShadows, OrbitControls } from "@react-three/drei";
+import { ChevronDown, Phone } from "lucide-react";
+import dynamic from "next/dynamic";
 
-const slides = [
-  {
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1920&q=85",
-    title: "Precisione",
-    subtitle: "nell'Elettromeccanica",
-    desc: "Riparazione professionale di pompe, inverter e impianti idraulici.",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1920&q=85",
-    title: "Esperienza",
-    subtitle: "e Affidabilità",
-    desc: "Anni di competenze al servizio di privati e aziende su tutta Roma.",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=85",
-    title: "Soluzioni",
-    subtitle: "su Misura",
-    desc: "Collaudi, revisioni e gestione inverter: ogni intervento è personalizzato.",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=85",
-    title: "Interventi",
-    subtitle: "Rapidi e Sicuri",
-    desc: "Pronti a intervenire su tutta Roma e Provincia in tempi brevi.",
-  },
+const PumpScene = dynamic(() => import("./PumpScene"), { ssr: false });
+
+const texts = [
+  { title: "Precisione", subtitle: "nell'Elettromeccanica", desc: "Riparazione professionale di pompe, inverter e impianti idraulici." },
+  { title: "Esperienza", subtitle: "e Affidabilità", desc: "Anni di competenze al servizio di privati e aziende su tutta Roma." },
+  { title: "Soluzioni", subtitle: "su Misura", desc: "Collaudi, revisioni e gestione inverter: ogni intervento è personalizzato." },
 ];
 
 export default function Hero() {
-  const [current, setCurrent] = useState(0);
-  const [prev, setPrev] = useState<number | null>(null);
-  const [transitioning, setTransitioning] = useState(false);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
-  const tiltRef = useRef({ x: 0, y: 0 });
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const [textIdx, setTextIdx] = useState(0);
   const rafRef = useRef<number | null>(null);
-
-  const goTo = useCallback((index: number) => {
-    if (transitioning) return;
-    setTransitioning(true);
-    setPrev(current);
-    setCurrent(index);
-    setTimeout(() => {
-      setPrev(null);
-      setTransitioning(false);
-    }, 1200);
-  }, [current, transitioning]);
-
-  const next = useCallback(() => goTo((current + 1) % slides.length), [current, goTo]);
-  const back = useCallback(() => goTo((current - 1 + slides.length) % slides.length), [current, goTo]);
+  const mouseRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const t = setInterval(next, 7000);
-    return () => clearInterval(t);
-  }, [next]);
-
-  useEffect(() => {
-    function onMouseMove(e: MouseEvent) {
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-      tiltRef.current = {
-        x: (e.clientY - cy) / cy,
-        y: (e.clientX - cx) / cx,
+    function onMove(e: MouseEvent) {
+      mouseRef.current = {
+        x: (e.clientX / window.innerWidth) * 2 - 1,
+        y: (e.clientY / window.innerHeight) * 2 - 1,
       };
       if (!rafRef.current) {
         rafRef.current = requestAnimationFrame(() => {
-          setTilt({ ...tiltRef.current });
+          setMouseX(mouseRef.current.x);
+          setMouseY(mouseRef.current.y);
           rafRef.current = null;
         });
       }
     }
-    window.addEventListener("mousemove", onMouseMove);
-    return () => window.removeEventListener("mousemove", onMouseMove);
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
   useEffect(() => {
-    function onScroll() { setScrollY(window.scrollY); }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const t = setInterval(() => setTextIdx(i => (i + 1) % texts.length), 5000);
+    return () => clearInterval(t);
   }, []);
 
-  const imgStyle = {
-    transform: `perspective(800px) scale(1.2) translateY(${scrollY * 0.5}px) rotateX(${-tilt.x * 12}deg) rotateY(${tilt.y * 12}deg)`,
-    transition: "transform 0.2s ease-out",
-  };
+  // mouseY da -1 a 1 → explode da 0 a 1.2
+  const explode = Math.max(0, (mouseY + 1) / 2) * 1.2;
+  // mouseX → rotation
+  const rotation = mouseX * Math.PI * 0.8;
 
-  const contentStyle = {
-    transform: `perspective(800px) translateX(${tilt.y * -25}px) translateY(${tilt.x * -18}px) translateZ(60px)`,
-    transition: "transform 0.4s ease-out",
-  };
+  const text = texts[textIdx];
 
   return (
-    <section
-      ref={sectionRef}
-      id="home"
-      className="relative h-screen w-full overflow-hidden"
-    >
-      {slides.map((slide, i) => {
-        const isActive = i === current;
-        const isPrev = i === prev;
-        if (!isActive && !isPrev) return null;
-        return (
-          <div
-            key={i}
-            className="absolute inset-0 transition-opacity duration-1000"
-            style={{ opacity: isActive ? 1 : 0, zIndex: isPrev ? 1 : 2 }}
-          >
-            <img
-              src={slide.image}
-              alt=""
-              className="w-full h-full object-cover will-change-transform"
-              style={isActive ? imgStyle : { transform: "scale(1.2)" }}
-            />
-          </div>
-        );
-      })}
+    <section id="home" className="relative h-screen w-full overflow-hidden bg-slate-950">
+      {/* 3D Canvas */}
+      <div className="absolute inset-0 z-0">
+        <Canvas
+          camera={{ position: [0, 1.5, 7], fov: 45 }}
+          gl={{ antialias: true }}
+          dpr={[1, 2]}
+        >
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[5, 8, 5]} intensity={1.5} castShadow />
+          <directionalLight position={[-5, 2, -5]} intensity={0.5} color="#38bdf8" />
+          <pointLight position={[0, 0, 4]} intensity={1.0} color="#f97316" />
 
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/50 via-black/30 to-black/80" />
-      <div className="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.5)_100%)]" />
+          <Suspense fallback={null}>
+            <PumpScene explode={explode} rotation={rotation} />
+            <ContactShadows position={[0, -2.5, 0]} opacity={0.4} scale={10} blur={2} />
+            <Environment preset="city" />
+          </Suspense>
+        </Canvas>
+      </div>
 
-      <div
-        className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center px-6"
-        style={contentStyle}
-      >
-        <div key={current} className="animate-fadeInUp">
-          <p className="text-orange-400 font-semibold text-sm uppercase tracking-widest mb-4 drop-shadow-lg">
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+
+      {/* Text content */}
+      <div className="absolute inset-0 z-20 flex flex-col justify-center px-8 md:px-16 pointer-events-none">
+        <div key={textIdx} className="animate-fadeInUp max-w-xl">
+          <p className="text-orange-400 font-semibold text-sm uppercase tracking-widest mb-4">
             Mazzelli Elettromeccanica · Roma
           </p>
-          <h1 className="text-5xl md:text-8xl font-black leading-tight mb-4 text-white drop-shadow-2xl">
-            <span className="gradient-text">{slides[current].title}</span>
+          <h1 className="text-5xl md:text-7xl font-black leading-tight mb-4 text-white drop-shadow-2xl">
+            <span className="gradient-text">{text.title}</span>
             <br />
-            {slides[current].subtitle}
+            {text.subtitle}
           </h1>
-          <p className="text-slate-200 text-xl md:text-2xl leading-relaxed mb-10 max-w-2xl mx-auto drop-shadow-lg">
-            {slides[current].desc}
+          <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-8 drop-shadow-lg">
+            {text.desc}
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-wrap gap-4 pointer-events-auto">
           <a
             href="#contatti"
             className="px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg hover:from-orange-400 hover:to-orange-500 transition-all shadow-xl shadow-orange-500/40"
@@ -157,31 +109,13 @@ export default function Hero() {
         </div>
       </div>
 
-      <button
-        onClick={back}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full glass flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
-      >
-        <ChevronLeft size={24} />
-      </button>
-      <button
-        onClick={next}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full glass flex items-center justify-center text-white hover:bg-white/20 transition-all border border-white/20"
-      >
-        <ChevronRight size={24} />
-      </button>
-
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-30 flex gap-2">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            className={`rounded-full transition-all duration-500 ${
-              i === current ? "w-8 h-2 bg-orange-500" : "w-2 h-2 bg-white/40 hover:bg-white/70"
-            }`}
-          />
-        ))}
+      {/* Mouse hint */}
+      <div className="absolute bottom-24 right-8 z-20 text-slate-500 text-xs text-right pointer-events-none">
+        <p>↕ muovi il mouse per smontare la pompa</p>
+        <p>↔ ruota per esplorarla</p>
       </div>
 
+      {/* Scroll cue */}
       <a
         href="#about"
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 text-white/60 hover:text-orange-400 animate-float transition-colors"
