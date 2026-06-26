@@ -13,7 +13,7 @@ const values = [
   {
     icon: Award,
     title: "Esperienza Comprovata",
-    desc: "Oltre 15 anni nel settore elettromeccanico a Roma e dintorni.",
+    desc: "Oltre 10 anni nel settore elettromeccanico a Roma e dintorni.",
     color: "text-sky-400",
     bg: "bg-sky-500/10",
   },
