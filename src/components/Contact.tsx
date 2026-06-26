@@ -138,12 +138,18 @@ export default function Contact() {
               ))}
             </div>
 
-            <div className="glass rounded-2xl overflow-hidden h-48 flex items-center justify-center relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-900/20 to-slate-900" />
-              <div className="relative text-center">
-                <MapPin size={32} className="text-orange-400 mx-auto mb-2" />
-                <p className="text-white font-semibold">Roma e Provincia</p>
-                <p className="text-slate-400 text-sm">Interventi su tutta la città</p>
+            <div className="glass rounded-2xl overflow-hidden relative">
+              <iframe
+                title="Zona di intervento — Roma e Provincia"
+                src="https://www.google.com/maps?q=Roma,Italia&z=10&output=embed"
+                className="w-full h-56 border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <div className="absolute top-3 left-3 glass px-3 py-1.5 rounded-full flex items-center gap-2 pointer-events-none">
+                <MapPin size={14} className="text-orange-400" />
+                <span className="text-xs font-semibold text-white">Roma e Provincia</span>
               </div>
             </div>
           </div>
