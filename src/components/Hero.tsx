@@ -147,7 +147,18 @@ export default function Hero() {
             className="px-8 py-4 rounded-full glass text-white font-bold text-lg hover:bg-white/10 transition-all border border-white/30 flex items-center gap-2"
           >
             <Phone size={18} />
-            +39 346 593 5633
+            Chiama Ora
+          </a>
+          <a
+            href="https://wa.me/393465935633"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-4 rounded-full bg-[#25D366] text-white font-bold text-lg hover:bg-[#1ebe5b] transition-all shadow-xl shadow-[#25D366]/40 flex items-center gap-2"
+          >
+            <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor" aria-hidden="true">
+              <path d="M16.04 3C9.4 3 4 8.4 4 15.04c0 2.12.55 4.18 1.6 6L4 29l8.13-1.55a12 12 0 0 0 3.9.65h.01C22.68 28.1 28 22.7 28 16.06 28 8.4 22.68 3 16.04 3Zm0 21.9c-1.2 0-2.38-.2-3.5-.6l-.25-.1-4.83.92.93-4.7-.16-.26a9.9 9.9 0 0 1-1.5-5.06c0-5.5 4.48-9.97 10-9.97 2.66 0 5.16 1.04 7.04 2.92a9.9 9.9 0 0 1 2.92 7.05c0 5.5-4.48 9.97-10 9.97Zm5.5-7.47c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.67-2.08-.18-.3-.02-.46.13-.6.13-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.63-.93-2.23-.24-.58-.49-.5-.68-.51l-.58-.01c-.2 0-.53.07-.8.37-.28.3-1.05 1.03-1.05 2.5 0 1.48 1.08 2.9 1.23 3.1.15.2 2.12 3.24 5.13 4.54.72.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.08 1.78-.72 2.03-1.42.25-.7.25-1.3.18-1.42-.07-.13-.27-.2-.57-.35Z"/>
+            </svg>
+            WhatsApp
           </a>
         </div>
       </div>
