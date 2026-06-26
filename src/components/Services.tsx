@@ -48,7 +48,7 @@ const services = [
     subtitle: "Programmazione & Configurazione",
     desc: "Configurazione, programmazione e riparazione di inverter per il controllo di pompe e gruppi di pressione. Ottimizziamo i parametri di funzionamento per massimizzare l'efficienza energetica e la durata delle apparecchiature.",
     features: ["Programmazione parametri", "Ottimizzazione energetica", "Riparazione guasti elettronici", "Compatibilità multi-marca"],
-    image: "https://images.unsplash.com/photo-1620283085439-39620a1e21c4?w=800&q=80",
+    image: "https://i.postimg.cc/8z0RVP3M/inverter-new-min.jpg",
     color: "from-emerald-500 to-teal-600",
     glow: "shadow-emerald-500/20",
     iconBg: "bg-emerald-500/10",
