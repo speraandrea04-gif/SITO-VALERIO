@@ -110,7 +110,7 @@ export default function About() {
                 </p>
               </div>
               <a
-                href="tel:+393401234567"
+                href="tel:+393465935633"
                 className="shrink-0 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 text-white font-bold hover:from-orange-400 hover:to-amber-300 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap"
               >
                 📞 Chiama Ora
