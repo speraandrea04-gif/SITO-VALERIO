@@ -35,7 +35,7 @@ const services = [
     subtitle: "e Idraulici",
     desc: "Collaudi tecnici completi su impianti elettrici e idraulici per verificarne la conformità e sicurezza. Rilasciamo documentazione tecnica al termine di ogni collaudo, utile per certificazioni e pratiche burocratiche.",
     features: ["Verifica conformità impianti", "Collaudi di pressione", "Documentazione tecnica", "Certificazioni di sicurezza"],
-    image: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=80",
+    image: "https://i.postimg.cc/15ThnDVB/collaudo-impianto-elettrico.jpg",
     color: "from-violet-500 to-purple-600",
     glow: "shadow-violet-500/20",
     iconBg: "bg-violet-500/10",
